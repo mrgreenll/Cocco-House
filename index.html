@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cocco House — Krabi, Thailand</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: '#2C1002',
+            earth: '#3D2018',
+            teak: '#8B5230',
+            gold: '#C4923A',
+            cream: '#F5F0E8',
+            'cream-dark': '#EDE7D8',
+            palm: '#447A37',
+            sage: '#899670',
+            mist: '#ABB5B0',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --maroon: #2C1002;
+      --earth: #3D2018;
+      --teak: #8B5230;
+      --gold: #C4923A;
+      --cream: #F5F0E8;
+      --cream-dark: #EDE7D8;
+      --palm: #447A37;
+      --sage: #899670;
+      --mist: #ABB5B0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--earth);
+      overflow-x: hidden;
+    }
+
+    /* Grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      padding: 1.75rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.45s ease, padding 0.35s ease, box-shadow 0.35s ease;
+    }
+    #nav.scrolled {
+      background: rgba(44, 16, 2, 0.96);
+      backdrop-filter: blur(16px);
+      padding: 1rem 3.5rem;
+      box-shadow: 0 2px 40px rgba(44, 16, 2, 0.25);
+    }
+    .nav-logo {
+      height: 48px;
+      transition: height 0.3s ease;
+      filter: drop-shadow(0 1px 6px rgba(0,0,0,0.25));
+    }
+    #nav.scrolled .nav-logo { height: 40px; }
+    .nav-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.8);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: var(--cream); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-book {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--maroon);
+      background: var(--gold);
+      padding: 0.65rem 1.6rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-book:hover { background: #d4a855; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh; min-height: 720px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('brand_asset/drone_garden.jpg') center 35% / cover no-repeat;
+      transform: scale(1.06);
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(44,16,2,0.18) 0%,
+        rgba(44,16,2,0.12) 35%,
+        rgba(44,16,2,0.55) 70%,
+        rgba(44,16,2,0.88) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 0 1.5rem;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem; font-weight: 400;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.75rem;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.9s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.8rem, 9vw, 7.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(28px);
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-weight: 300;
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      color: rgba(245,240,232,0.68);
+      margin-bottom: 2.75rem;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.9s ease 0.75s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.9s ease 1s forwards;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      opacity: 0; animation: fadeIn 1s ease 1.6s forwards;
+    }
+    .scroll-hint span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(245,240,232,0.45);
+    }
+    .scroll-needle {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, rgba(196,146,58,0.8), transparent);
+      animation: needleDrop 2.2s ease 1.6s infinite;
+    }
+    @keyframes needleDrop {
+      0%,100% { transform: scaleY(0); transform-origin: top; opacity: 0.8; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ── BUTTONS ── */
+    .btn-gold {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.73rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--maroon);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
+      border: none; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      box-shadow: 0 6px 24px rgba(196,146,58,0.35);
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-gold:hover { background: #d4a855; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,146,58,0.45); }
+    .btn-ghost {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.73rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cream);
+      background: transparent;
+      border: 1px solid rgba(245,240,232,0.4);
+      padding: 1rem 2.5rem;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .btn-ghost:hover { border-color: var(--cream); background: rgba(245,240,232,0.08); }
+
+    /* ── COMMON SECTION ── */
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .display-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--maroon);
+    }
+    .body-text {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300; font-size: 0.97rem;
+      line-height: 1.8; color: #5c4135;
+    }
+    .gold-bar { width: 38px; height: 1px; background: var(--gold); display: block; }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.12s; }
+    .delay-2 { transition-delay: 0.24s; }
+    .delay-3 { transition-delay: 0.36s; }
+    .delay-4 { transition-delay: 0.48s; }
+
+    /* ── IMAGE CARDS ── */
+    .img-hover { overflow: hidden; }
+    .img-hover img {
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .img-hover:hover img { transform: scale(1.06); }
+
+    /* ── ROOM CARD ── */
+    .room-card {
+      background: #fff;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .room-card:hover {
+      box-shadow: 0 20px 60px rgba(44,16,2,0.14);
+    }
+    .room-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem; font-weight: 600;
+      color: var(--maroon);
+    }
+    .room-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+    .room-link:hover { gap: 0.85rem; }
+
+    /* ── FEATURE BLOCK ── */
+    .feature-icon { color: var(--gold); }
+
+    /* ── STRIP SCROLL ── */
+    .strip {
+      display: flex; overflow-x: auto;
+      gap: 4px; scrollbar-width: none;
+      cursor: grab;
+    }
+    .strip::-webkit-scrollbar { display: none; }
+    .strip:active { cursor: grabbing; }
+    .strip-item {
+      flex: 0 0 320px; height: 230px;
+      overflow: hidden;
+    }
+    .strip-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .strip-item:hover img { transform: scale(1.05); }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 290px 290px;
+      gap: 4px;
+    }
+    .g-item { overflow: hidden; position: relative; }
+    .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .g-item:hover img { transform: scale(1.06); }
+    .g-item:first-child { grid-row: 1 / 3; }
+
+    /* ── QUOTE ── */
+    .quote-wrap {
+      background: var(--maroon);
+      position: relative; overflow: hidden;
+    }
+    .quote-wrap::before {
+      content: '\201C';
+      position: absolute; top: -4rem; left: 3%;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22rem; line-height: 1;
+      color: rgba(196,146,58,0.05);
+      pointer-events: none;
+    }
+
+    /* ── CTA BG ── */
+    .cta-wrap { position: relative; overflow: hidden; }
+    .cta-bg-img {
+      position: absolute; inset: 0;
+      background: url('brand_asset/drone_garden2.jpg') center / cover no-repeat;
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(44,16,2,0.93) 0%, rgba(44,16,2,0.6) 100%);
+    }
+
+    /* ── FOOTER ── */
+    .ft { background: var(--earth); }
+    .ft-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 300;
+      color: rgba(245,240,232,0.45); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .ft-link:hover { color: var(--gold); }
+
+    /* ── MEDIA ── */
+    @media (max-width: 768px) {
+      #nav { padding: 1.1rem 1.5rem; }
+      #nav.scrolled { padding: 0.8rem 1.5rem; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .g-item:first-child { grid-row: span 1; }
+      .strip-item { flex: 0 0 260px; height: 190px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════ NAV -->
+<nav id="nav">
+  <a href="#"><img src="brand_asset/logo.jpg" alt="Cocco House" class="nav-logo"></a>
+  <div class="hidden md:flex items-center gap-10">
+    <a href="#rooms" class="nav-link">Rooms</a>
+    <a href="#garden" class="nav-link">Garden</a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#location" class="nav-link">Location</a>
+  </div>
+  <a href="#book" class="nav-book">Book Now</a>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════ HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Cocco House · Krabi, Thailand</p>
+    <h1 class="hero-title">Where the Garden<br>Meets the Sky</h1>
+    <p class="hero-subtitle">A private sanctuary nestled in nature's embrace</p>
+    <div class="hero-cta">
+      <a href="#book" class="btn-gold">Book Your Stay</a>
+      <a href="#garden" class="btn-ghost">Discover the Property</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Explore</span>
+    <div class="scroll-needle"></div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ INFO STRIP -->
+<div style="background: var(--maroon); padding: 0.9rem 0;">
+  <div style="max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; padding: 0 2rem;">
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Garden Bungalows</span>
+    </div>
+    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Krabi, Thailand</span>
+    </div>
+    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+      <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Mountain Views</span>
+    </div>
+    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Warm Hospitality</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════ ABOUT -->
+<section id="garden" style="padding: 8rem 0; background: var(--cream);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;" class="md:grid-cols-2">
+
+      <!-- Text -->
+      <div class="reveal">
+        <p class="eyebrow" style="margin-bottom: 1.25rem;">Our Story</p>
+        <span class="gold-bar" style="margin-bottom: 2rem;"></span>
+        <h2 class="display-heading" style="font-size: clamp(2.4rem, 4vw, 3.6rem); margin-bottom: 1.75rem;">
+          A Retreat<br>Rooted in Nature
+        </h2>
+        <p class="body-text" style="margin-bottom: 1.25rem;">
+          Nestled between lush tropical gardens and the dramatic limestone karsts of Krabi, Cocco House is a collection of thoughtfully crafted bungalows where time slows, and the natural world takes center stage.
+        </p>
+        <p class="body-text" style="margin-bottom: 2.5rem;">
+          Each morning greets you with birdsong and sunlight filtering through coconut palms. Each evening, the mountains glow gold against the sky. This is Cocco House — where every guest feels at home.
+        </p>
+        <div style="display: flex; gap: 2.5rem; flex-wrap: wrap;">
+          <div>
+            <p style="font-family:'Cormorant Garamond';font-size:2.4rem;font-weight:600;color:var(--maroon);line-height:1;">6+</p>
+            <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-top:0.3rem;">Garden Bungalows</p>
+          </div>
+          <div style="width:1px;height:48px;background:rgba(139,82,48,0.2);align-self:center;"></div>
+          <div>
+            <p style="font-family:'Cormorant Garamond';font-size:2.4rem;font-weight:600;color:var(--maroon);line-height:1;">2</p>
+            <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-top:0.3rem;">Acres of Garden</p>
+          </div>
+          <div style="width:1px;height:48px;background:rgba(139,82,48,0.2);align-self:center;"></div>
+          <div>
+            <p style="font-family:'Cormorant Garamond';font-size:2.4rem;font-weight:600;color:var(--maroon);line-height:1;">∞</p>
+            <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-top:0.3rem;">Mountain Views</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Images -->
+      <div class="reveal delay-2">
+        <div class="img-hover" style="height: 520px; margin-bottom: 4px;">
+          <img src="brand_asset/mood1 .jpg" alt="Tropical garden bungalow" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div class="img-hover" style="height: 160px;">
+            <img src="brand_asset/drone_garden_mountainview.jpg" alt="Mountain view" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div class="img-hover" style="height: 160px;">
+            <img src="brand_asset/front_entrace.jpg" alt="Room entrance" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ ROOMS -->
+<section id="rooms" style="padding: 8rem 0; background: var(--cream-dark);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+
+    <div class="reveal" style="text-align:center; margin-bottom: 4rem;">
+      <p class="eyebrow" style="margin-bottom:1.25rem;">Accommodation</p>
+      <span class="gold-bar" style="margin: 0 auto 1.75rem; display:block;"></span>
+      <h2 class="display-heading" style="font-size: clamp(2.4rem,4vw,3.6rem);">Garden Bungalows</h2>
+      <p class="body-text" style="max-width:480px;margin:1rem auto 0;">Each bungalow is a private garden retreat, designed with natural materials and an eye for quiet luxury.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+
+      <!-- Room 1 -->
+      <div class="room-card reveal">
+        <div class="img-hover" style="height:310px;position:relative;">
+          <img src="brand_asset/front_house.jpg" alt="Garden Bungalow" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
+          <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Type 01</span>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Cormorant Garamond';font-size:1.55rem;font-weight:400;color:var(--maroon);margin-bottom:0.6rem;">Garden Bungalow</h3>
+          <p class="body-text" style="font-size:0.88rem;margin-bottom:1.4rem;">A cozy bungalow surrounded by tropical palms with a private terrace and garden views.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div><span class="room-price">฿1,500</span><span style="font-family:'DM Sans';font-size:0.75rem;color:var(--sage);"> / night</span></div>
+            <a href="#book" class="room-link">View Room <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 2 -->
+      <div class="room-card reveal delay-2">
+        <div class="img-hover" style="height:310px;position:relative;">
+          <img src="brand_asset/LINE_ALBUM_3569_260503_18.jpg" alt="Deluxe Bungalow" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
+          <div style="position:absolute;top:1rem;right:1rem;background:var(--gold);padding:0.2rem 0.7rem;">
+            <span style="font-family:'DM Sans';font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--maroon);font-weight:500;">Popular</span>
+          </div>
+          <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Type 02</span>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Cormorant Garamond';font-size:1.55rem;font-weight:400;color:var(--maroon);margin-bottom:0.6rem;">Deluxe Bungalow</h3>
+          <p class="body-text" style="font-size:0.88rem;margin-bottom:1.4rem;">Spacious interiors with teak wood accents and floor-to-ceiling glass doors opening to a private garden patio.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div><span class="room-price">฿2,200</span><span style="font-family:'DM Sans';font-size:0.75rem;color:var(--sage);"> / night</span></div>
+            <a href="#book" class="room-link">View Room <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 3 -->
+      <div class="room-card reveal delay-3">
+        <div class="img-hover" style="height:310px;position:relative;">
+          <img src="brand_asset/bed.jpg" alt="Premium Suite" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
+          <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Type 03</span>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Cormorant Garamond';font-size:1.55rem;font-weight:400;color:var(--maroon);margin-bottom:0.6rem;">Premium Suite</h3>
+          <p class="body-text" style="font-size:0.88rem;margin-bottom:1.4rem;">Our largest bungalow with a king bed, en-suite bathroom, and a wraparound terrace perfect for families.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div><span class="room-price">฿3,000</span><span style="font-family:'DM Sans';font-size:0.75rem;color:var(--sage);"> / night</span></div>
+            <a href="#book" class="room-link">View Room <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ FEATURES -->
+<section style="padding: 8rem 0; background: var(--cream);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+
+    <div class="reveal" style="text-align:center;margin-bottom:4rem;">
+      <p class="eyebrow" style="margin-bottom:1.25rem;">The Experience</p>
+      <span class="gold-bar" style="margin:0 auto 1.75rem;display:block;"></span>
+      <h2 class="display-heading" style="font-size:clamp(2.4rem,4vw,3.6rem);">Life in the Garden</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;" class="md:grid-cols-4">
+
+      <div class="reveal" style="text-align:center;padding:2rem 1rem;">
+        <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22V12m0 0C12 7 7 4 2 6c0 6 4 10 10 10zm0 0c0-5 5-8 10-6-1 6-5 10-10 10z"/>
+          </svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond';font-size:1.35rem;font-weight:600;color:var(--maroon);margin-bottom:0.6rem;">Tropical Gardens</h3>
+        <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">Wander through 2 acres of lush gardens filled with coconut palms, tropical flowers, and ancient trees.</p>
+      </div>
+
+      <div class="reveal delay-1" style="text-align:center;padding:2rem 1rem;">
+        <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 17 9 5 15 14 18 9 21 17"/>
+          </svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond';font-size:1.35rem;font-weight:600;color:var(--maroon);margin-bottom:0.6rem;">Mountain Views</h3>
+        <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">Wake up to Krabi's dramatic limestone karsts framing the horizon — nature's own work of art.</p>
+      </div>
+
+      <div class="reveal delay-2" style="text-align:center;padding:2rem 1rem;">
+        <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 009 9 9 9 0 11-9-9z"/>
+          </svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond';font-size:1.35rem;font-weight:600;color:var(--maroon);margin-bottom:0.6rem;">Peaceful Retreat</h3>
+        <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">An intimate setting away from the crowds — perfect for couples, solo travelers, and families seeking quiet.</p>
+      </div>
+
+      <div class="reveal delay-3" style="text-align:center;padding:2rem 1rem;">
+        <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond';font-size:1.35rem;font-weight:600;color:var(--maroon);margin-bottom:0.6rem;">Warm Hospitality</h3>
+        <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">Our team shares local knowledge, recommends hidden gems, and is always on hand to make your stay special.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ PHOTO STRIP -->
+<div style="background:var(--maroon);padding:4px 0;overflow:hidden;">
+  <div class="strip" id="photoStrip" style="padding:4px;">
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_5.jpg" alt="Aerial sunset"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_11.jpg" alt="Garden palms"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_22.jpg" alt="Garden path"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_18.jpg" alt="Bungalow exterior"></div>
+    <div class="strip-item"><img src="brand_asset/drone_garden_mountainview.jpg" alt="Mountain backdrop"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_20.jpg" alt="Property"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_21.jpg" alt="Garden view"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_19.jpg" alt="Lush greenery"></div>
+    <div class="strip-item"><img src="brand_asset/LINE_ALBUM_3569_260503_15.jpg" alt="Grounds"></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════ GALLERY -->
+<section id="gallery" style="padding: 8rem 0; background: var(--cream-dark);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+
+    <div class="reveal" style="text-align:center;margin-bottom:3.5rem;">
+      <p class="eyebrow" style="margin-bottom:1.25rem;">Gallery</p>
+      <span class="gold-bar" style="margin:0 auto 1.75rem;display:block;"></span>
+      <h2 class="display-heading" style="font-size:clamp(2.4rem,4vw,3.6rem);">Glimpses of Cocco House</h2>
+    </div>
+
+    <div class="gallery-grid reveal">
+      <div class="g-item">
+        <img src="brand_asset/drone_garden.jpg" alt="Aerial garden view">
+      </div>
+      <div class="g-item">
+        <img src="brand_asset/front_house.jpg" alt="Garden bungalow">
+      </div>
+      <div class="g-item">
+        <img src="brand_asset/bed.jpg" alt="Room interior">
+      </div>
+      <div class="g-item">
+        <img src="brand_asset/front_entrace.jpg" alt="Room entrance">
+      </div>
+      <div class="g-item">
+        <img src="brand_asset/LINE_ALBUM_3569_260503_22.jpg" alt="Garden path">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ QUOTE -->
+<section class="quote-wrap" style="padding: 9rem 3.5rem;">
+  <div style="max-width:780px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+
+    <!-- Leaf ornament -->
+    <div style="margin-bottom:2.25rem;display:flex;justify-content:center;">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M26 4 C26 4 6 16 6 32 C6 44 16 48 26 48 C36 48 46 44 46 32 C46 16 26 4 26 4Z" stroke="#C4923A" stroke-width="1" fill="none"/>
+        <line x1="26" y1="4" x2="26" y2="48" stroke="#C4923A" stroke-width="1"/>
+        <path d="M26 18 C20 16 14 21 13 27" stroke="#C4923A" stroke-width="0.9" fill="none"/>
+        <path d="M26 26 C32 24 38 29 39 35" stroke="#C4923A" stroke-width="0.9" fill="none"/>
+        <path d="M26 34 C21 33 17 36 16 41" stroke="#C4923A" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+
+    <blockquote style="font-family:'Cormorant Garamond';font-style:italic;font-weight:300;font-size:clamp(1.75rem,4vw,2.85rem);line-height:1.45;color:var(--cream);letter-spacing:-0.01em;margin-bottom:2.25rem;">
+      "Where the garden meets the sky,<br>and every guest feels at home."
+    </blockquote>
+    <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);">Cocco House · Krabi, Thailand</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ LOCATION -->
+<section id="location" style="padding: 8rem 0; background: var(--cream);">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+
+      <!-- Text -->
+      <div class="reveal">
+        <p class="eyebrow" style="margin-bottom:1.25rem;">Find Us</p>
+        <span class="gold-bar" style="margin-bottom:2rem;"></span>
+        <h2 class="display-heading" style="font-size:clamp(2.4rem,4vw,3.6rem);margin-bottom:1.5rem;">
+          In the Heart<br>of Krabi
+        </h2>
+        <p class="body-text" style="margin-bottom:2.5rem;">
+          Set in a peaceful neighbourhood of Krabi, we are just minutes from the town centre, local markets, and the gateway to Krabi's most spectacular beaches and islands.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2.75rem;">
+          <div style="display:flex;align-items:flex-start;gap:1rem;">
+            <svg style="color:var(--gold);flex-shrink:0;margin-top:3px;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div>
+              <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-bottom:0.3rem;">Address</p>
+              <p style="font-family:'DM Sans';font-size:0.93rem;color:var(--earth);">Krabi Town, Krabi Province,<br>Thailand 81000</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:1rem;">
+            <svg style="color:var(--gold);flex-shrink:0;margin-top:3px;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <div>
+              <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-bottom:0.3rem;">Phone</p>
+              <p style="font-family:'DM Sans';font-size:0.93rem;color:var(--earth);">+66 XX XXX XXXX</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:1rem;">
+            <svg style="color:var(--gold);flex-shrink:0;margin-top:3px;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <div>
+              <p style="font-family:'DM Sans';font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage);margin-bottom:0.3rem;">Email</p>
+              <p style="font-family:'DM Sans';font-size:0.93rem;color:var(--earth);">hello@coccohouse.com</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" class="btn-gold">Get Directions</a>
+      </div>
+
+      <!-- Image -->
+      <div class="reveal delay-2">
+        <div class="img-hover" style="height:480px;position:relative;">
+          <img src="brand_asset/LINE_ALBUM_3569_260503_5.jpg" alt="Aerial view of Cocco House" style="width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.45) 0%,transparent 55%);"></div>
+          <p style="position:absolute;bottom:1.5rem;left:1.75rem;font-family:'Cormorant Garamond';font-style:italic;font-size:1.05rem;color:rgba(245,240,232,0.9);">Cocco House from above</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ BOOKING CTA -->
+<section id="book" class="cta-wrap" style="padding: 9rem 3.5rem;">
+  <div class="cta-bg-img"></div>
+  <div class="cta-overlay"></div>
+  <div style="position:relative;z-index:10;max-width:680px;margin:0 auto;text-align:center;">
+    <p class="eyebrow" style="margin-bottom:1.25rem;">Reserve Your Garden</p>
+    <span class="gold-bar" style="margin:0 auto 2rem;display:block;"></span>
+    <h2 style="font-family:'Cormorant Garamond';font-weight:300;font-size:clamp(2.5rem,5vw,4.2rem);color:var(--cream);line-height:1.08;margin-bottom:1.5rem;letter-spacing:-0.02em;">
+      Your Escape<br>Awaits
+    </h2>
+    <p style="font-family:'DM Sans';font-size:0.95rem;line-height:1.8;color:rgba(245,240,232,0.65);margin:0 auto 3rem;max-width:440px;">
+      Book directly for the best rates and a personal welcome. We look forward to hosting you at Cocco House.
+    </p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:hello@coccohouse.com" class="btn-gold">Book Your Stay</a>
+      <a href="mailto:hello@coccohouse.com" class="btn-ghost">Send an Enquiry</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════ FOOTER -->
+<footer class="ft" style="padding: 5rem 3.5rem 2.5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:4rem;margin-bottom:4rem;">
+
+      <!-- Brand -->
+      <div>
+        <img src="brand_asset/logo.jpg" alt="Cocco House" style="height:58px;opacity:0.9;margin-bottom:1.5rem;border-radius:2px;">
+        <p style="font-family:'Cormorant Garamond';font-style:italic;font-size:1.05rem;color:rgba(245,240,232,0.45);max-width:270px;line-height:1.75;">
+          Where the garden meets the sky, and every guest feels at home.
+        </p>
+      </div>
+
+      <!-- Explore -->
+      <div>
+        <p style="font-family:'DM Sans';font-size:0.63rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Explore</p>
+        <div style="display:flex;flex-direction:column;gap:0.85rem;">
+          <a href="#garden" class="ft-link">The Garden</a>
+          <a href="#rooms" class="ft-link">Our Rooms</a>
+          <a href="#gallery" class="ft-link">Gallery</a>
+          <a href="#location" class="ft-link">Location</a>
+          <a href="#book" class="ft-link">Book a Stay</a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <p style="font-family:'DM Sans';font-size:0.63rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Contact</p>
+        <div style="display:flex;flex-direction:column;gap:0.85rem;">
+          <span class="ft-link">Krabi Town, Thailand</span>
+          <a href="mailto:hello@coccohouse.com" class="ft-link">hello@coccohouse.com</a>
+          <span class="ft-link">+66 XX XXX XXXX</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="border-top:1px solid rgba(245,240,232,0.07);padding-top:1.75rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;">
+      <p style="font-family:'DM Sans';font-size:0.72rem;color:rgba(245,240,232,0.25);">© 2024 Cocco House. All rights reserved.</p>
+      <p style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.15em;color:rgba(245,240,232,0.25);">KRABI · THAILAND</p>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  // ── Nav scroll ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Hero parallax ──
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const s = window.pageYOffset;
+    if (s < window.innerHeight) {
+      heroBg.style.transform = `scale(1.06) translateY(${s * 0.28}px)`;
+    }
+  }, { passive: true });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Drag-to-scroll strip ──
+  const strip = document.getElementById('photoStrip');
+  let dragging = false, startX, sl;
+  strip.addEventListener('mousedown', e => { dragging = true; startX = e.pageX - strip.offsetLeft; sl = strip.scrollLeft; });
+  strip.addEventListener('mouseleave', () => dragging = false);
+  strip.addEventListener('mouseup', () => dragging = false);
+  strip.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    e.preventDefault();
+    strip.scrollLeft = sl - (e.pageX - strip.offsetLeft - startX) * 1.4;
+  });
+
+  // ── Auto-scroll strip ──
+  setInterval(() => {
+    if (!dragging) {
+      strip.scrollLeft += 0.8;
+      if (strip.scrollLeft >= strip.scrollWidth - strip.clientWidth) strip.scrollLeft = 0;
+    }
+  }, 16);
+</script>
+
+</body>
+</html>
