@@ -370,16 +370,69 @@
     }
     .ft-link:hover { color: var(--gold); }
 
-    /* ── MEDIA ── */
+    /* ── LAYOUT CLASSES (replaces inline grid styles) ── */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 3.5rem; }
+    .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .grid-rooms { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .grid-features { display: grid; grid-template-columns: repeat(4,1fr); gap: 2.5rem; }
+    .grid-footer-cols { display: grid; grid-template-columns: 1.8fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
-      #nav { padding: 1.1rem 1.5rem; }
-      #nav.scrolled { padding: 0.8rem 1.5rem; }
+      /* Nav */
+      #nav { padding: 1rem 1.25rem; }
+      #nav.scrolled { padding: 0.75rem 1.25rem; }
+      .nav-logo { height: 38px; }
+      #nav.scrolled .nav-logo { height: 34px; }
+      .nav-book { padding: 0.5rem 1rem; font-size: 0.65rem; }
+
+      /* Section padding */
+      .section-wrap { padding: 0 1.25rem; }
+      .section-v-pad { padding-top: 4.5rem !important; padding-bottom: 4.5rem !important; }
+      .quote-wrap { padding: 5rem 1.5rem !important; }
+      .cta-wrap { padding: 5rem 1.5rem !important; }
+      .ft { padding: 3.5rem 1.25rem 2rem !important; }
+
+      /* Grids → single column */
+      .grid-split { grid-template-columns: 1fr; gap: 2rem; }
+      .grid-rooms { grid-template-columns: 1fr; }
+      .grid-features { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .grid-footer-cols { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+
+      /* About images */
+      .about-img-main { height: 280px !important; }
+      .about-img-pair { display: none !important; }
+
+      /* Location image */
+      .loc-img { height: 260px !important; }
+
+      /* Info strip separators */
+      .strip-sep { display: none; }
+
+      /* Gallery */
       .gallery-grid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 220px 220px 220px;
+        grid-template-rows: 180px 180px 180px;
       }
       .g-item:first-child { grid-row: span 1; }
-      .strip-item { flex: 0 0 260px; height: 190px; }
+
+      /* Photo strip */
+      .strip-item { flex: 0 0 240px; height: 170px; }
+
+      /* Features text smaller */
+      .feature-item { padding: 1.25rem 0.5rem !important; }
+
+      /* Rooms card image */
+      .room-img { height: 240px !important; }
+
+      /* Quote */
+      .quote-wrap::before { font-size: 14rem; top: -2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .grid-features { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .btn-gold, .btn-ghost { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -420,22 +473,22 @@
 
 <!-- ════════════════════════════════════════════════════════ INFO STRIP -->
 <div style="background: var(--maroon); padding: 0.9rem 0;">
-  <div style="max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; padding: 0 2rem;">
+  <div style="max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; padding: 0.5rem 1.5rem;">
     <div style="display: flex; align-items: center; gap: 0.6rem;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
       <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Garden Bungalows</span>
     </div>
-    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <span class="strip-sep" style="color:rgba(196,146,58,0.25);">|</span>
     <div style="display: flex; align-items: center; gap: 0.6rem;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
       <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Krabi, Thailand</span>
     </div>
-    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <span class="strip-sep" style="color:rgba(196,146,58,0.25);">|</span>
     <div style="display: flex; align-items: center; gap: 0.6rem;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
       <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Mountain Views</span>
     </div>
-    <span style="color:rgba(196,146,58,0.25);">|</span>
+    <span class="strip-sep" style="color:rgba(196,146,58,0.25);">|</span>
     <div style="display: flex; align-items: center; gap: 0.6rem;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
       <span style="font-family:'DM Sans';font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.65);">Warm Hospitality</span>
@@ -445,9 +498,9 @@
 
 
 <!-- ════════════════════════════════════════════════════════ ABOUT -->
-<section id="garden" style="padding: 8rem 0; background: var(--cream);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;" class="md:grid-cols-2">
+<section id="garden" class="section-v-pad" style="padding: 8rem 0; background: var(--cream);">
+  <div class="section-wrap">
+    <div class="grid-split">
 
       <!-- Text -->
       <div class="reveal">
@@ -482,10 +535,10 @@
 
       <!-- Images -->
       <div class="reveal delay-2">
-        <div class="img-hover" style="height: 520px; margin-bottom: 4px;">
+        <div class="img-hover about-img-main" style="height: 520px; margin-bottom: 4px;">
           <img src="brand_asset/mood1 .jpg" alt="Tropical garden bungalow" style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+        <div class="about-img-pair" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
           <div class="img-hover" style="height: 160px;">
             <img src="brand_asset/drone_garden_mountainview.jpg" alt="Mountain view" style="width:100%;height:100%;object-fit:cover;">
           </div>
@@ -501,8 +554,8 @@
 
 
 <!-- ════════════════════════════════════════════════════════ ROOMS -->
-<section id="rooms" style="padding: 8rem 0; background: var(--cream-dark);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+<section id="rooms" class="section-v-pad" style="padding: 8rem 0; background: var(--cream-dark);">
+  <div class="section-wrap">
 
     <div class="reveal" style="text-align:center; margin-bottom: 4rem;">
       <p class="eyebrow" style="margin-bottom:1.25rem;">Accommodation</p>
@@ -511,11 +564,11 @@
       <p class="body-text" style="max-width:480px;margin:1rem auto 0;">Each bungalow is a private garden retreat, designed with natural materials and an eye for quiet luxury.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+    <div class="grid-rooms">
 
       <!-- Room 1 -->
       <div class="room-card reveal">
-        <div class="img-hover" style="height:310px;position:relative;">
+        <div class="img-hover room-img" style="height:310px;position:relative;">
           <img src="brand_asset/front_house.jpg" alt="Garden Bungalow" style="width:100%;height:100%;object-fit:cover;">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
           <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Type 01</span>
@@ -532,7 +585,7 @@
 
       <!-- Room 2 -->
       <div class="room-card reveal delay-2">
-        <div class="img-hover" style="height:310px;position:relative;">
+        <div class="img-hover room-img" style="height:310px;position:relative;">
           <img src="brand_asset/LINE_ALBUM_3569_260503_18.jpg" alt="Deluxe Bungalow" style="width:100%;height:100%;object-fit:cover;">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
           <div style="position:absolute;top:1rem;right:1rem;background:var(--gold);padding:0.2rem 0.7rem;">
@@ -552,7 +605,7 @@
 
       <!-- Room 3 -->
       <div class="room-card reveal delay-3">
-        <div class="img-hover" style="height:310px;position:relative;">
+        <div class="img-hover room-img" style="height:310px;position:relative;">
           <img src="brand_asset/bed.jpg" alt="Premium Suite" style="width:100%;height:100%;object-fit:cover;">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.72) 0%,transparent 55%);"></div>
           <span style="position:absolute;bottom:1.1rem;left:1.25rem;font-family:'DM Sans';font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Type 03</span>
@@ -573,8 +626,8 @@
 
 
 <!-- ════════════════════════════════════════════════════════ FEATURES -->
-<section style="padding: 8rem 0; background: var(--cream);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+<section class="section-v-pad" style="padding: 8rem 0; background: var(--cream);">
+  <div class="section-wrap">
 
     <div class="reveal" style="text-align:center;margin-bottom:4rem;">
       <p class="eyebrow" style="margin-bottom:1.25rem;">The Experience</p>
@@ -582,9 +635,9 @@
       <h2 class="display-heading" style="font-size:clamp(2.4rem,4vw,3.6rem);">Life in the Garden</h2>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;" class="md:grid-cols-4">
+    <div class="grid-features">
 
-      <div class="reveal" style="text-align:center;padding:2rem 1rem;">
+      <div class="reveal feature-item" style="text-align:center;padding:2rem 1rem;">
         <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22V12m0 0C12 7 7 4 2 6c0 6 4 10 10 10zm0 0c0-5 5-8 10-6-1 6-5 10-10 10z"/>
@@ -594,7 +647,7 @@
         <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">Wander through 2 acres of lush gardens filled with coconut palms, tropical flowers, and ancient trees.</p>
       </div>
 
-      <div class="reveal delay-1" style="text-align:center;padding:2rem 1rem;">
+      <div class="reveal delay-1 feature-item" style="text-align:center;padding:2rem 1rem;">
         <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="3 17 9 5 15 14 18 9 21 17"/>
@@ -604,7 +657,7 @@
         <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">Wake up to Krabi's dramatic limestone karsts framing the horizon — nature's own work of art.</p>
       </div>
 
-      <div class="reveal delay-2" style="text-align:center;padding:2rem 1rem;">
+      <div class="reveal delay-2 feature-item" style="text-align:center;padding:2rem 1rem;">
         <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3a6 6 0 009 9 9 9 0 11-9-9z"/>
@@ -614,7 +667,7 @@
         <p style="font-family:'DM Sans';font-size:0.86rem;line-height:1.75;color:#5c4135;">An intimate setting away from the crowds — perfect for couples, solo travelers, and families seeking quiet.</p>
       </div>
 
-      <div class="reveal delay-3" style="text-align:center;padding:2rem 1rem;">
+      <div class="reveal delay-3 feature-item" style="text-align:center;padding:2rem 1rem;">
         <div style="margin-bottom:1.5rem;display:flex;justify-content:center;">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C4923A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
@@ -646,8 +699,8 @@
 
 
 <!-- ════════════════════════════════════════════════════════ GALLERY -->
-<section id="gallery" style="padding: 8rem 0; background: var(--cream-dark);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
+<section id="gallery" class="section-v-pad" style="padding: 8rem 0; background: var(--cream-dark);">
+  <div class="section-wrap">
 
     <div class="reveal" style="text-align:center;margin-bottom:3.5rem;">
       <p class="eyebrow" style="margin-bottom:1.25rem;">Gallery</p>
@@ -701,9 +754,9 @@
 
 
 <!-- ════════════════════════════════════════════════════════ LOCATION -->
-<section id="location" style="padding: 8rem 0; background: var(--cream);">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 3.5rem;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+<section id="location" class="section-v-pad" style="padding: 8rem 0; background: var(--cream);">
+  <div class="section-wrap">
+    <div class="grid-split">
 
       <!-- Text -->
       <div class="reveal">
@@ -745,7 +798,7 @@
 
       <!-- Image -->
       <div class="reveal delay-2">
-        <div class="img-hover" style="height:480px;position:relative;">
+        <div class="img-hover loc-img" style="height:480px;position:relative;">
           <img src="brand_asset/LINE_ALBUM_3569_260503_5.jpg" alt="Aerial view of Cocco House" style="width:100%;height:100%;object-fit:cover;">
           <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,16,2,0.45) 0%,transparent 55%);"></div>
           <p style="position:absolute;bottom:1.5rem;left:1.75rem;font-family:'Cormorant Garamond';font-style:italic;font-size:1.05rem;color:rgba(245,240,232,0.9);">Cocco House from above</p>
@@ -782,7 +835,7 @@
 <footer class="ft" style="padding: 5rem 3.5rem 2.5rem;">
   <div style="max-width:1200px;margin:0 auto;">
 
-    <div style="display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:4rem;margin-bottom:4rem;">
+    <div class="grid-footer-cols">
 
       <!-- Brand -->
       <div>
