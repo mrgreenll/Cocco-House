@@ -3,3 +3,6 @@ temporary screenshots/
 .DS_Store
 package-lock.json
 *.log
+
+# Local Claude settings
+.claude/
